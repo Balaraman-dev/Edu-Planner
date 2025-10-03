@@ -1,6 +1,6 @@
 from openai import OpenAI
 
-api_key = "sk-"
+api_key = "sk-1ed2770d3ef24711882aa487f348679d"
 
 # Initialize the client with custom timeout
 client = OpenAI(

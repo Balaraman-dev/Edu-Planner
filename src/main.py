@@ -26,9 +26,15 @@ def main():
     best_score = 0
 
     for iteration in range(3):  # 3 optimization rounds
-        scores, feedback = evaluator.evaluate(best_plan, skill_tree)
+        try:
+            scores, feedback = evaluator.evaluate(best_plan, skill_tree)
+        except ConnectionError as e:
+            print(f"[Iter {iteration+1}] Ollama connection error: {e}")
+            print("Skipping evaluation for this iteration.")
+            continue
+
         avg_score = compute_ciddp_score(scores)
-        print(f"[Iter {iteration+1}] CIDDP Score: {avg_score:.2f}")
+        print(f"[Iter {iteration+1}] CIDPP Score: {avg_score:.2f}")
 
         if avg_score > best_score:
             best_score = avg_score

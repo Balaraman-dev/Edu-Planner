@@ -17,13 +17,13 @@ def _format_scores_instructions() -> str:
         "[I]:<score 1-5>; short comment  — Integrity\n"
         "[D]:<score 1-5>; short comment  — Depth\n"
         "[P]:<score 1-5>; short comment  — Practicality\n"
-        "[E]:<score 1-5>; short comment  — Pertinence\n"
+        "[P]:<score 1-5>; short comment  — Pertinence\n"
         "Example output:\n"
         "[C]:3; Clear but too brief\n"
         "[I]:4; Good structure\n"
         "[D]:2; Lacks virtual memory details\n"
         "[P]:5; Uses real shell examples\n"
-        "[E]:4; Matches beginner level"
+        "[P]:4; Matches beginner level"
     )
 
 
@@ -54,48 +54,38 @@ def get_evaluator_prompt(lesson_plan: str, skill_summary: str) -> str:
     )
 
 
-def get_optimizer_prompt(lesson_plan: str, skill_summary: str) -> str:
-    """Return a prompt guiding an optimizer agent to suggest concrete improvements.
-
-    The optimizer should propose edits, reorganizations, and add/outlines of missing examples or exercises.
-    """
+def get_optimizer_prompt(lesson_plan: str, skill_summary: str, feedback: str = "") -> str:
+    """Return a prompt guiding an optimizer agent to suggest concrete improvements."""
     instructions = _format_scores_instructions()
+    
+    feedback_section = f"Feedback to Address:\n{feedback}\n\n" if feedback.strip() else ""
 
     return (
         f"You are an expert curriculum optimizer for Operating Systems courses. Using the CIDDP criteria, analyze the lesson plan below and produce concrete, prioritized improvement suggestions (short list).\n\n"
         f"Student Skill Profile: {skill_summary}\n\n"
+        f"{feedback_section}"
         f"Lesson Plan:\n{lesson_plan}\n\n"
         f"Tasks:\n"
         f"1) Provide 5 prioritized, actionable improvements (each 1--2 lines).\n"
-        f"2) For each improvement, indicate which CIDDP area it affects (C/I/D/P/E).\n"
+        f"2) For each improvement, indicate which CIDDP area it affects (C/I/D/P/P).\n"
         f"3) Suggest one small in-lesson exercise or demo (1--3 steps) that addresses the top missing concept.\n\n"
         f"{instructions}"
     )
 
 
-def get_analyst_prompt(lesson_plan: str, skill_summary: str, desired_outcome: str | None = None) -> str:
-    """Return a prompt that asks an analyst agent to extract weaknesses and map them to remediation steps.
-
-    Args:
-        lesson_plan: Lesson plan text.
-        skill_summary: Student skill profile.
-        desired_outcome: Optional — the intended competence after the lesson (e.g., "be able to explain paging and implement a simple simulator").
-    """
-    instructions = _format_scores_instructions()
-    outcome_line = f"Desired outcome: {desired_outcome}\n\n" if desired_outcome else ""
-
+def get_analyst_prompt(example: str, skill_summary: str) -> str:
+    """Prompt to extract common misconceptions from a given OS example or explanation."""
     return (
-        f"You are an instructional analyst for Operating Systems. Read the lesson plan and identify gaps, misconceptions likely to arise, and remediation steps mapped to CIDDP criteria.\n\n"
+        f"You are an instructional analyst for Operating Systems. Given the following OS problem explanation or student-facing example, identify likely misconceptions for students at the specified level.\n\n"
         f"Student Skill Profile: {skill_summary}\n\n"
-        f"{outcome_line}"
-        f"Lesson Plan:\n{lesson_plan}\n\n"
+        f"Example:\n\"{example}\"\n\n"
         f"Tasks:\n"
-        f"- List the top 5 weaknesses or likely misconceptions (one line each).\n"
-        f"- For each weakness, provide a short remediation (1--2 sentences) and tag it with the affected CIDDP label(s).\n"
-        f"- If applicable, include a single recommended resource or short in-class demo (title or 3-step outline).\n\n"
-        f"{instructions}"
+        f"- List exactly 3 common student misconceptions (e.g., confusing deadlock with starvation, thinking threads share stack, etc.).\n"
+        f"- Output as bullet points:\n"
+        f"  - Misconception 1: ...\n"
+        f"  - Misconception 2: ...\n"
+        f"  - Misconception 3: ..."
     )
-
 
 # if _name_ == "_main_":
 #     # quick sanity check example
