@@ -1,0 +1,27 @@
+[
+  {
+    "concept": "Threads vs Processes",
+    "error": "Assuming threads have separate memory spaces.",
+    "clarification": "Threads share the process's memory space but have their own stack and registers."
+  },
+  {
+    "concept": "Deadlock vs Starvation",
+    "error": "Believing deadlock and starvation are the same thing.",
+    "clarification": "Deadlock is a permanent blocking state; starvation is indefinite postponement without blocking."
+  },
+  {
+    "concept": "FIFO vs Round Robin",
+    "error": "Thinking FIFO scheduling is the same as Round Robin.",
+    "clarification": "FIFO is non-preemptive; Round Robin uses time slices for preemption."
+  },
+  {
+    "concept": "Paging",
+    "error": "Believing page size affects logical address space directly.",
+    "clarification": "Page size determines frame size; logical address space is independent."
+  },
+  {
+    "concept": "Virtual Memory",
+    "error": "Confusing virtual memory with physical memory.",
+    "clarification": "Virtual memory allows larger address spaces via paging; physical is actual RAM."
+  }
+]

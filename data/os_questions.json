@@ -1,14 +1,182 @@
 [
   {
-    "topic": "Processes_and_Threads",
-    "knowledge": "A process is an instance of a program in execution. Threads share memory within a process.",
-    "example": "Explain why creating threads is faster than creating processes in Linux.",
-    "difficulty": 2
+    "topic": "Introduction_to_OS",
+    "knowledge": "An operating system acts as an interface between the user and computer hardware.",
+    "example": "What is the main function of an operating system?",
+    "difficulty": "beginner"
+  },
+  {
+    "topic": "Functions_of_OS",
+    "knowledge": "An OS performs process management, memory management, file handling, and device control.",
+    "example": "Name four key functions of an operating system.",
+    "difficulty": "beginner"
+  },
+  {
+    "topic": "Types_of_OS",
+    "knowledge": "There are batch, time-sharing, distributed, embedded, and real-time operating systems.",
+    "example": "Differentiate between batch and time-sharing OS.",
+    "difficulty": "beginner"
+  },
+  {
+    "topic": "User_Interface",
+    "knowledge": "A CLI uses text commands, while a GUI uses graphical elements like windows and icons.",
+    "example": "What is the difference between CLI and GUI?",
+    "difficulty": "beginner"
+  },
+  {
+    "topic": "System_Calls",
+    "knowledge": "System calls allow user-level programs to request services from the OS kernel.",
+    "example": "What is a system call? Give an example in Linux.",
+    "difficulty": "beginner"
+  },
+  {
+    "topic": "Kernel_vs_User_Mode",
+    "knowledge": "Kernel mode allows full hardware access, while user mode restricts it for safety.",
+    "example": "Why does the OS separate user mode and kernel mode?",
+    "difficulty": "beginner"
+  },
+  {
+    "topic": "Processes",
+    "knowledge": "A process is a program in execution, consisting of code, data, and stack segments.",
+    "example": "What are the main states of a process?",
+    "difficulty": "beginner"
+  },
+  {
+    "topic": "Threads",
+    "knowledge": "Threads are lightweight processes that share resources within a process.",
+    "example": "Why is creating threads faster than creating processes?",
+    "difficulty": "beginner"
+  },
+  {
+    "topic": "Process_Scheduling",
+    "knowledge": "The scheduler decides which process runs next based on a scheduling algorithm.",
+    "example": "Name two common CPU scheduling algorithms.",
+    "difficulty": "beginner"
+  },
+  {
+    "topic": "Synchronization_Basics",
+    "knowledge": "Synchronization ensures that multiple threads or processes access shared data safely.",
+    "example": "What is race condition in operating systems?",
+    "difficulty": "beginner"
+  },
+  {
+    "topic": "Critical_Section_Problem",
+    "knowledge": "The critical section problem deals with ensuring mutual exclusion when multiple processes access shared data.",
+    "example": "What are the three requirements of a solution to the critical section problem?",
+    "difficulty": "intermediate"
+  },
+  {
+    "topic": "Semaphores",
+    "knowledge": "Semaphores are synchronization primitives used to control access to shared resources.",
+    "example": "How can a semaphore prevent race conditions?",
+    "difficulty": "intermediate"
+  },
+  {
+    "topic": "Deadlocks",
+    "knowledge": "A deadlock occurs when a set of processes are waiting for each other indefinitely.",
+    "example": "Explain the four necessary conditions for a deadlock.",
+    "difficulty": "intermediate"
+  },
+  {
+    "topic": "Deadlock_Avoidance",
+    "knowledge": "The Banker’s Algorithm helps avoid deadlocks by ensuring safe states.",
+    "example": "What is the main idea behind the Banker’s Algorithm?",
+    "difficulty": "intermediate"
   },
   {
     "topic": "Memory_Management",
-    "knowledge": "Virtual memory uses paging to map virtual addresses to physical frames.",
-    "example": "If a system uses 4KB pages and a virtual address is 0x12345678, what is the page number?",
-    "difficulty": 3
+    "knowledge": "Memory management allocates and deallocates memory to processes efficiently.",
+    "example": "What is fragmentation in memory management?",
+    "difficulty": "intermediate"
+  },
+  {
+    "topic": "Paging",
+    "knowledge": "Paging divides memory into fixed-size pages to avoid external fragmentation.",
+    "example": "How does paging differ from segmentation?",
+    "difficulty": "intermediate"
+  },
+  {
+    "topic": "Segmentation",
+    "knowledge": "Segmentation divides memory into variable-sized logical segments like code, data, and stack.",
+    "example": "Explain how segmentation provides logical separation of memory.",
+    "difficulty": "intermediate"
+  },
+  {
+    "topic": "Virtual_Memory",
+    "knowledge": "Virtual memory allows execution of processes not fully in physical memory using paging or segmentation.",
+    "example": "What is the role of page tables in virtual memory?",
+    "difficulty": "intermediate"
+  },
+  {
+    "topic": "Page_Replacement",
+    "knowledge": "When physical memory is full, page replacement algorithms decide which page to remove.",
+    "example": "Compare FIFO and LRU page replacement algorithms.",
+    "difficulty": "intermediate"
+  },
+  {
+    "topic": "File_System",
+    "knowledge": "File systems manage how data is stored, organized, and retrieved on storage devices.",
+    "example": "What is the difference between FAT32 and NTFS?",
+    "difficulty": "intermediate"
+  },
+  {
+    "topic": "I/O_Management",
+    "knowledge": "I/O management controls communication between the OS and external devices.",
+    "example": "What is buffering in I/O systems?",
+    "difficulty": "intermediate"
+  },
+  {
+    "topic": "Disk_Scheduling",
+    "knowledge": "Disk scheduling optimizes access time by deciding the order of disk I/O requests.",
+    "example": "Explain the SCAN and C-SCAN disk scheduling algorithms.",
+    "difficulty": "advanced"
+  },
+  {
+    "topic": "RAID",
+    "knowledge": "RAID combines multiple disks to improve performance and reliability.",
+    "example": "Differentiate between RAID 0, RAID 1, and RAID 5.",
+    "difficulty": "advanced"
+  },
+  {
+    "topic": "System_Performance",
+    "knowledge": "System performance depends on CPU utilization, throughput, and turnaround time.",
+    "example": "How can context switching affect CPU performance?",
+    "difficulty": "advanced"
+  },
+  {
+    "topic": "Security_and_Protection",
+    "knowledge": "An OS ensures protection and security by controlling access to system resources.",
+    "example": "Explain how access control lists (ACLs) work in an operating system.",
+    "difficulty": "advanced"
+  },
+  {
+    "topic": "Distributed_Systems",
+    "knowledge": "Distributed OS manages multiple interconnected systems as a single unit.",
+    "example": "What are the advantages of distributed operating systems?",
+    "difficulty": "advanced"
+  },
+  {
+    "topic": "Real_Time_OS",
+    "knowledge": "A real-time OS provides predictable response times for time-critical tasks.",
+    "example": "What is the key difference between hard and soft real-time systems?",
+    "difficulty": "advanced"
+  },
+  {
+    "topic": "Virtualization",
+    "knowledge": "Virtualization allows multiple OS instances to run on a single hardware platform.",
+    "example": "Explain the role of a hypervisor in virtualization.",
+    "difficulty": "advanced"
+  },
+  {
+    "topic": "Cloud_Computing_OS",
+    "knowledge": "Cloud operating systems manage distributed resources for cloud-based services.",
+    "example": "How does a cloud OS differ from a traditional OS?",
+    "difficulty": "advanced"
+  },
+  {
+    "topic": "Modern_OS_Trends",
+    "knowledge": "Modern OS design focuses on modularity, security, and scalability.",
+    "example": "What are the key features of microkernel architecture?",
+    "difficulty": "advanced"
   }
 ]

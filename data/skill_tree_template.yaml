@@ -1,0 +1,5 @@
+process_management: 3
+memory_management: 2
+file_systems: 4
+cpu_scheduling: 3
+synchronization_deadlocks: 2
