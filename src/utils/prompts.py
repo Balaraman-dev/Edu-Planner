@@ -27,23 +27,29 @@ def _format_scores_instructions() -> str:
     )
 
 
-def get_evaluator_prompt(lesson_plan: str, skill_summary: str) -> str:
-    """Return a clean evaluator prompt for assessing an OS lesson plan.
+def get_evaluator_prompt(lesson_plan: str, skill_summary: str, sample_questions=None) -> str:
+    """Return a clean evaluator prompt for assessing an OS lesson plan, skill tree, and sample questions.
 
     Args:
         lesson_plan: The full lesson plan text to evaluate.
-        skill_summary: A one- to three-sentence summary of the student's
-                       current skill level and prior knowledge.
+        skill_summary: A one- to three-sentence summary of the student's current skill level and prior knowledge.
+        sample_questions: List of sample questions (dicts) to include in the evaluation.
 
     Returns:
         A formatted prompt string ready to feed to an evaluator LLM agent.
     """
     instructions = _format_scores_instructions()
+    questions_section = ""
+    if sample_questions:
+        questions_section = "Sample Questions for Evaluation:\n"
+        for q in sample_questions:
+            questions_section += f"Q: {q.get('question')}\nOptions: {', '.join(q.get('options', []))}\nCorrect: {q.get('answer')}\n\n"
 
     return (
         f"You are an expert Operating Systems instructor. Evaluate the following lesson plan using the CIDDP criteria (Clarity, Integrity, Depth, Practicality, Pertinence).\n\n"
         f"Student Skill Profile: {skill_summary}\n\n"
         f"Lesson Plan:\n{lesson_plan}\n\n"
+        f"{questions_section}"
         f"Evaluate on:\n"
         f"- Clarity: Is the content simple, jargon-free, and easy to follow?\n"
         f"- Integrity: Does it cover necessary concepts and provide examples?\n"
@@ -61,7 +67,7 @@ def get_optimizer_prompt(lesson_plan: str, skill_summary: str, feedback: str = "
     feedback_section = f"Feedback to Address:\n{feedback}\n\n" if feedback.strip() else ""
 
     return (
-        f"You are an expert curriculum optimizer for Operating Systems courses. Using the CIDDP criteria, analyze the lesson plan below and produce concrete, prioritized improvement suggestions (short list).\n\n"
+        f"You are an expert curriculum optimizer for Operating Systems courses. Using the CIDPP criteria, analyze the lesson plan below and produce concrete, prioritized improvement suggestions (short list).\n\n"
         f"Student Skill Profile: {skill_summary}\n\n"
         f"{feedback_section}"
         f"Lesson Plan:\n{lesson_plan}\n\n"
