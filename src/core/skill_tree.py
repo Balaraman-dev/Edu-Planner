@@ -14,6 +14,9 @@ class SkillTree:
         if dim in self.levels and 1 <= level <= 5:
             self.levels[dim] = level
 
+    def get_levels(self) -> dict:
+        return self.levels
+
     def get_summary(self) -> str:
         return "; ".join([f"{k}: Level {v}" for k, v in self.levels.items()])
 

@@ -1,0 +1,110 @@
+[
+  {
+    "topic": "Disk_Scheduling",
+    "question": "Which of the following statements is true regarding the SCAN and C-SCAN disk scheduling algorithms?",
+    "options": {
+      "A": "SCAN services requests in both directions, while C-SCAN services requests in only one direction.",
+      "B": "C-SCAN services requests in both directions, but reverses direction immediately after reaching the highest request.",
+      "C": "Both SCAN and C-SCAN algorithms reverse direction immediately after servicing the highest request.",
+      "D": "C-SCAN provides lower average waiting time compared to SCAN for uniformly distributed requests."
+    },
+    "correct": "A",
+    "difficulty": "advanced"
+  },
+  {
+    "topic": "RAID",
+    "question": "Which RAID level provides fault tolerance through parity distributed across all member disks, allows continued operation during a single disk failure, improves read performance via striping, but incurs slower write speeds due to parity computation?",
+    "options": {
+      "A": "RAID 5",
+      "B": "RAID 1",
+      "C": "RAID 0",
+      "D": "RAID 10"
+    },
+    "correct": "A",
+    "difficulty": "advanced"
+  },
+  {
+    "topic": "System_Performance",
+    "question": "What is a potential trade-off when excessively optimizing CPU utilization through aggressive process scheduling?",
+    "options": {
+      "A": "Increased context switching overhead reduces throughput and worsens turnaround time.",
+      "B": "Higher CPU utilization directly improves both throughput and turnaround time.",
+      "C": "Process prioritization eliminates starvation, improving fairness but not performance.",
+      "D": "Reduced idle time allows more I/O-bound processes to execute efficiently."
+    },
+    "correct": "A",
+    "difficulty": "advanced"
+  },
+  {
+    "topic": "Security_and_Protection",
+    "question": "In an operating system implementing Access Control Lists (ACLs), when a user's access request to a resource involves both a user-specific entry and a group entry in the ACL, which mechanism is typically used to resolve the effective permissions?",
+    "options": {
+      "A": "The user-specific entry is evaluated first, overriding any conflicting group entries.",
+      "B": "The group entry is prioritized, as group policies generally supersede individual user permissions.",
+      "C": "Permissions from both entries are merged, with the least permissive setting taking effect.",
+      "D": "The system randomly selects between the user and group entries to enforce unpredictability."
+    },
+    "correct": "A",
+    "difficulty": "advanced"
+  },
+  {
+    "topic": "Distributed_Systems",
+    "question": "Which of the following is a key advantage of a distributed operating system due to its ability to manage multiple systems as a single unit?",
+    "options": {
+      "A": "Transparent access to distributed resources as a single unified system",
+      "B": "Higher hardware costs due to redundant components",
+      "C": "Increased dependency on a central server for operations",
+      "D": "Reduced scalability compared to centralized systems"
+    },
+    "correct": "A",
+    "difficulty": "advanced"
+  },
+  {
+    "topic": "Real_Time_OS",
+    "question": "Which scheduling algorithm is optimal for hard real-time systems with periodic tasks when priorities are assigned statically based on task periods?",
+    "options": {
+      "A": "Rate-Monotonic Scheduling",
+      "B": "Earliest Deadline First",
+      "C": "Round Robin",
+      "D": "First-Come-First-Served"
+    },
+    "correct": "A",
+    "difficulty": "advanced"
+  },
+  {
+    "topic": "Virtualization",
+    "question": "Which of the following statements accurately describes how a hypervisor handles privileged CPU instructions in a virtualized environment?",
+    "options": {
+      "A": "The hypervisor traps and emulates privileged instructions executed by guest OS kernels.",
+      "B": "The hypervisor delegates handling of privileged instructions to the host operating system's kernel.",
+      "C": "Hardware virtualization extensions allow privileged instructions to execute natively without hypervisor intervention.",
+      "D": "Guest OS kernels are modified to avoid issuing privileged instructions, eliminating the need for hypervisor intervention."
+    },
+    "correct": "A",
+    "difficulty": "advanced"
+  },
+  {
+    "topic": "Cloud_Computing_OS",
+    "question": "Which feature of a cloud operating system primarily enables seamless horizontal scaling across distributed infrastructure?",
+    "options": {
+      "A": "Dynamic resource allocation across multiple nodes",
+      "B": "Efficient process scheduling on a single server",
+      "C": "Hardware abstraction through device drivers",
+      "D": "Centralized management of user permissions"
+    },
+    "correct": "A",
+    "difficulty": "advanced"
+  },
+  {
+    "topic": "Modern_OS_Trends",
+    "question": "Which of the following is a primary advantage of microkernel architecture in modern operating system design?",
+    "options": {
+      "A": "Modularity, minimal kernel-space execution, and enhanced security through isolation",
+      "B": "Monolithic structure optimized for high-performance hardware access",
+      "C": "User-space device drivers and real-time process prioritization",
+      "D": "Single address space for all services and reduced context-switch complexity"
+    },
+    "correct": "A",
+    "difficulty": "advanced"
+  }
+]

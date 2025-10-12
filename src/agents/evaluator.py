@@ -4,7 +4,7 @@ from utils.prompts import get_evaluator_prompt
 from core.cidpp import compute_cidpp_score
 
 class EvaluatorAgent:
-    def __init__(self, model="deepseek-r1"):
+    def __init__(self, model="meta-llama/llama-3.2-3b-instruct:free"):
         self.model = model
 
     def evaluate(self, lesson_plan: str, skill_tree) -> tuple[dict, dict]:

@@ -1,4 +1,7 @@
 import json
+import os
+import sys
+sys.path.append(os.path.dirname(__file__))
 from utils.prompts import get_answer_evaluation_prompt, get_lesson_plan_generation_prompt
 from llm import call_llm
 from core.skill_tree import SkillTree
@@ -54,14 +57,31 @@ def main():
     level = ""
     while level.lower() not in ["beginner", "intermediate", "advanced"]:
         level = input("Choose your learning path (Beginner / Intermediate / Advanced): ").strip().lower()
-    
-    # Load questions
-    with open("../data/os_questions.json", "r", encoding="utf-8") as f:
+
+    # Load detailed lesson plan
+    with open(os.path.join(os.path.dirname(__file__), "..", "data", "detailed_os_lesson_plan.md"), "r", encoding="utf-8") as f:
+        detailed_lesson_plan = f.read()
+
+    print(f"\nDetailed Operating Systems Lesson Plan:\n")
+    print(detailed_lesson_plan)
+    input("Press Enter to start the initial assessment...")
+
+    # Load questions based on level
+    if level == "beginner":
+        file_path = os.path.join(os.path.dirname(__file__), "..", "data", "beginner_questions.json")
+    elif level == "intermediate":
+        file_path = os.path.join(os.path.dirname(__file__), "..", "data", "intermediate_questions.json")
+    elif level == "advanced":
+        file_path = os.path.join(os.path.dirname(__file__), "..", "data", "advanced_questions.json")
+    else:
+        raise ValueError("Invalid level selected")
+
+    with open(file_path, "r", encoding="utf-8") as f:
         questions = json.load(f)
-    
-    # Filter by level, take up to 15
-    filtered_questions = [q for q in questions if q["difficulty"].lower() == level][:15]
-    
+
+    # Take up to 15 questions
+    filtered_questions = questions[:15]
+
     print(f"\nAssessing your knowledge with {len(filtered_questions)} questions at {level.capitalize()} level.\n")
     
     scores = {}
@@ -69,38 +89,23 @@ def main():
     answers = []
     
     for i, q in enumerate(filtered_questions, 1):
-        print(f"Q{i}: {q['example']}")
-        user_answer = input("Your answer: ").strip()
+        print(f"Q{i}: {q['question']}")
+        for opt in q['options']:
+            print(f"{opt}: {q['options'][opt]}")
+        user_answer = input("Your answer (A/B/C/D): ").strip().upper()
         answers.append(user_answer)
     
     print("\nEvaluating answers...")
     
     for q, user_answer in zip(filtered_questions, answers):
-        # Evaluate answer
-        prompt = get_answer_evaluation_prompt(q['example'], user_answer)
-        response = call_llm(prompt, temp=0.0)
-        
-        # Extract score (simple parsing)
-        score = 3  # Default
-        for line in response.splitlines():
-            if "score" in line.lower():
-                parts = line.lower().split("score")
-                if len(parts) > 1:
-                    digits = ''.join(filter(str.isdigit, parts[1]))
-                    if digits:
-                        score = int(digits)
-                        break
-            else:
-                try:
-                    score = int(line.strip())
-                    break
-                except:
-                    continue
-        
+        # Check if answer is correct
+        correct = user_answer == q['correct']
+        score = 5 if correct else 1  # 5 for correct, 1 for incorrect
+
         topic = q['topic']
         scores[topic] = score
         print(f"Score for {topic}: {score}/5")
-        
+
         # Update skill tree
         dim = TOPIC_TO_DIM.get(topic, "process_management")  # Default
         skill_level = min(5, max(1, score))  # Map 1-5 directly
@@ -110,11 +115,71 @@ def main():
     
     # Generate initial lesson plan based on weak areas
     weak_topics = [t for t, s in scores.items() if s < 3]
-    initial_plan = f"Personalized Lesson for {level.capitalize()} on weak topics: {', '.join(weak_topics)}"
+    if weak_topics:
+        analysis = f"Analysis: The student has weak areas in the following topics: {', '.join(weak_topics)}. The lesson plan will focus on these to improve understanding."
+        initial_plan = f"{analysis}\n\nPersonalized Lesson for {level.capitalize()} on weak topics: {', '.join(weak_topics)}"
+    else:
+        analysis = "Analysis: The student has demonstrated strong knowledge in all assessed topics, scoring perfectly. Therefore, a comprehensive beginner lesson plan is provided to reinforce and deepen understanding of all fundamental OS concepts."
+        lesson_content = """
+Comprehensive Beginner Lesson Plan for Operating Systems
+
+**Objective:** Introduce fundamental concepts of Operating Systems to beginners.
+
+**Topics to Cover:**
+
+1. **Introduction to OS**
+   - What is an Operating System?
+   - Role and importance in computing.
+
+2. **Functions of OS**
+   - Process management, memory management, file handling, device control.
+
+3. **Types of OS**
+   - Batch, interactive, real-time, distributed, etc.
+
+4. **User Interface**
+   - CLI vs GUI.
+
+5. **System Calls**
+   - How applications interact with OS.
+
+6. **Kernel vs User Mode**
+   - Protection and privilege levels.
+
+7. **Processes**
+   - Definition, states, process control block.
+
+8. **Threads**
+   - Multithreading, benefits over processes.
+
+9. **Process Scheduling**
+   - Algorithms: FCFS, SJF, Round Robin.
+
+10. **Synchronization Basics**
+    - Race conditions, critical sections.
+
+11. **Semaphores and Deadlocks**
+    - Synchronization tools, deadlock prevention.
+
+12. **Memory Management**
+    - Allocation, paging, segmentation, virtual memory.
+
+13. **File Systems**
+    - Organization, directories, permissions.
+
+14. **I/O Management**
+    - Device drivers, scheduling.
+
+15. **Other Topics**
+    - Security, distributed systems, modern trends.
+
+**Learning Activities:** Explanations, examples, quizzes.
+"""
+        initial_plan = f"{analysis}\n\n{lesson_content}"
     
-    evaluator = EvaluatorAgent(model="deepseek-r1")
-    optimizer = OptimizerAgent(model="deepseek-r1")
-    analyst = AnalystAgent(model="deepseek-r1")
+    evaluator = EvaluatorAgent(model="deepseek/deepseek-r1")
+    optimizer = OptimizerAgent(model="deepseek/deepseek-r1")
+    analyst = AnalystAgent(model="deepseek/deepseek-r1")
     
     # Initial optimization loop
     for i in range(3):  # Initial 3 iterations
@@ -126,7 +191,30 @@ def main():
     
     print("\nInitial Optimized Lesson Plan:\n")
     print(initial_plan)
-    
+
+    # Test after lesson plan: 10 questions
+    print("\nNow, let's test your understanding with 10 questions based on the lesson plan.")
+    input("Press Enter when ready for the test...")
+
+    test_scores = {}
+    test_questions = filtered_questions[:10]  # First 10 questions
+    for j, tq in enumerate(test_questions, 1):
+        print(f"Test Q{j}: {tq['question']}")
+        for opt in tq['options']:
+            print(f"{opt}: {tq['options'][opt]}")
+        test_answer = input("Your answer (A/B/C/D): ").strip().upper()
+
+        # Check if answer is correct
+        correct = test_answer == tq['correct']
+        test_score = 5 if correct else 1  # 5 for correct, 1 for incorrect
+
+        test_scores[tq['question']] = test_score
+        print(f"Test Score: {test_score}/5\n")
+
+    # Update skill tree based on test
+    avg_test_score = sum(test_scores.values()) / len(test_scores)
+    print(f"Average Test Score: {avg_test_score}/5")
+
     # Group questions by topic for per-topic learning
     topic_groups = {}
     for q in filtered_questions:
@@ -143,33 +231,20 @@ def main():
         
         input("Press Enter when ready for the test...")
         
-        # Test: 3 questions per topic
+        # Test: 10 questions per topic
         test_scores = {}
-        test_questions = topic_questions[:3]  # First 3
+        test_questions = topic_questions[:10]  # First 10
         for j, tq in enumerate(test_questions, 1):
-            print(f"Test Q{j}: {tq['example']}")
-            test_answer = input("Your answer: ").strip()
-            
-            prompt = get_answer_evaluation_prompt(tq['example'], test_answer)
-            response = call_llm(prompt, temp=0.0)
-            
-            test_score = 3  # Default
-            for line in response.splitlines():
-                if "score" in line.lower():
-                    parts = line.lower().split("score")
-                    if len(parts) > 1:
-                        digits = ''.join(filter(str.isdigit, parts[1]))
-                        if digits:
-                            test_score = int(digits)
-                            break
-                else:
-                    try:
-                        test_score = int(line.strip())
-                        break
-                    except:
-                        continue
-            
-            test_scores[tq['example']] = test_score
+            print(f"Test Q{j}: {tq['question']}")
+            for opt in tq['options']:
+                print(f"{opt}: {tq['options'][opt]}")
+            test_answer = input("Your answer (A/B/C/D): ").strip().upper()
+
+            # Check if answer is correct
+            correct = test_answer == tq['correct']
+            test_score = 5 if correct else 1  # 5 for correct, 1 for incorrect
+
+            test_scores[tq['question']] = test_score
             print(f"Test Score: {test_score}/5\n")
         
         # Re-update skill tree based on test

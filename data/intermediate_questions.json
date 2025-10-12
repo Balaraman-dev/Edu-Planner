@@ -1,0 +1,134 @@
+[
+  {
+    "topic": "Critical_Section_Problem",
+    "question": "In a system with two processes, a proposed solution to the critical section problem allows both processes to remain indefinitely in their entry sections even when the critical section is free. Which primary requirement is violated?",
+    "options": {
+      "A": "Progress",
+      "B": "Mutual Exclusion",
+      "C": "Bounded Waiting",
+      "D": "Atomicity"
+    },
+    "correct": "A",
+    "difficulty": "intermediate"
+  },
+  {
+    "topic": "Semaphores",
+    "question": "What happens when a process calls wait() on a semaphore initialized to 1?",
+    "options": {
+      "A": "The semaphore's value decrements to 0, and the process continues execution.",
+      "B": "The semaphore's value increments to 2, allowing multiple processes to access the resource.",
+      "C": "The process blocks immediately until the semaphore is destroyed.",
+      "D": "The semaphore's value resets to 1, signaling another process to wait."
+    },
+    "correct": "A",
+    "difficulty": "intermediate"
+  },
+  {
+    "topic": "Deadlocks",
+    "question": "Which of the following correctly lists all four necessary conditions for a deadlock?",
+    "options": {
+      "A": "Mutual Exclusion, Hold and Wait, No Preemption, Circular Wait",
+      "B": "Mutual Exclusion, Hold and Wait, Preemption, Circular Wait",
+      "C": "Mutual Exclusion, Non-blocking, No Preemption, Circular Wait",
+      "D": "Mutual Exclusion, Hold and Wait, No Preemption, Starvation"
+    },
+    "correct": "A",
+    "difficulty": "intermediate"
+  },
+  {
+    "topic": "Deadlock_Avoidance",
+    "question": "When a process requests resources, what does the Banker\u2019s Algorithm primarily verify to avoid deadlock?",
+    "options": {
+      "A": "Granting the request will leave the system in a safe state",
+      "B": "The requested resources are currently available in full",
+      "C": "The process has not previously requested resources",
+      "D": "All other processes have released their resources"
+    },
+    "correct": "A",
+    "difficulty": "intermediate"
+  },
+  {
+    "topic": "Memory_Management",
+    "question": "Which of the following scenarios best describes internal fragmentation in memory management?",
+    "options": {
+      "A": "Memory is allocated in fixed-size blocks, leading to unused space within a block.",
+      "B": "Free memory is scattered in small chunks, preventing allocation of larger contiguous blocks.",
+      "C": "Memory is frequently allocated and deallocated, causing excessive overhead.",
+      "D": "The system cannot allocate memory despite sufficient free space due to address space limitations."
+    },
+    "correct": "A",
+    "difficulty": "intermediate"
+  },
+  {
+    "topic": "Paging",
+    "question": "Why does paging help prevent external fragmentation in memory management?",
+    "options": {
+      "A": "It divides memory into fixed-size pages and frames.",
+      "B": "It allows memory to be allocated in variable-sized blocks.",
+      "C": "It uses compaction to gather free memory spaces.",
+      "D": "It ensures processes are stored in contiguous memory locations."
+    },
+    "correct": "A",
+    "difficulty": "intermediate"
+  },
+  {
+    "topic": "Segmentation",
+    "question": "Which of the following is a key advantage of segmentation in memory management?",
+    "options": {
+      "A": "Allows separate access permissions for code, data, and stack segments",
+      "B": "Eliminates external fragmentation completely",
+      "C": "Uses fixed-size blocks to simplify memory allocation",
+      "D": "Guarantees contiguous physical memory for each process"
+    },
+    "correct": "A",
+    "difficulty": "intermediate"
+  },
+  {
+    "topic": "Virtual_Memory",
+    "question": "Which of the following is a primary advantage of using virtual memory in an operating system?",
+    "options": {
+      "A": "Allows processes to use more memory than physically available",
+      "B": "Increases the speed of the CPU cache",
+      "C": "Eliminates the need for memory management hardware",
+      "D": "Ensures all processes run in contiguous physical memory"
+    },
+    "correct": "A",
+    "difficulty": "intermediate"
+  },
+  {
+    "topic": "Page_Replacement",
+    "question": "Which of the following statements is true regarding FIFO and LRU page replacement algorithms?",
+    "options": {
+      "A": "FIFO may evict a heavily used page that was loaded first, while LRU retains it if it was recently accessed.",
+      "B": "LRU always incurs fewer page faults than FIFO for any memory reference pattern.",
+      "C": "FIFO considers the most recent usage of pages, making it more efficient than LRU in cyclic access patterns.",
+      "D": "LRU uses a queue structure, while FIFO requires tracking access timestamps for pages."
+    },
+    "correct": "A",
+    "difficulty": "intermediate"
+  },
+  {
+    "topic": "File_System",
+    "question": "What is the primary purpose of a journaling feature in modern file systems like ext4 or NTFS?",
+    "options": {
+      "A": "To log changes before committing them to prevent data corruption during crashes",
+      "B": "To encrypt file contents for enhanced security",
+      "C": "To reduce file fragmentation through optimized allocation strategies",
+      "D": "To manage user permissions for file access control"
+    },
+    "correct": "A",
+    "difficulty": "intermediate"
+  },
+  {
+    "topic": "I/O_Management",
+    "question": "What is the primary purpose of spooling in I/O management?",
+    "options": {
+      "A": "Enable simultaneous access to a device by multiple processes through queuing",
+      "B": "Reduce CPU overhead by using dedicated hardware controllers",
+      "C": "Prioritize I/O requests based on real-time urgency",
+      "D": "Provide temporary storage to smooth data transfer rates between devices"
+    },
+    "correct": "A",
+    "difficulty": "intermediate"
+  }
+]

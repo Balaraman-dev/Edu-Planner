@@ -1,0 +1,122 @@
+[
+  {
+    "topic": "Introduction_to_OS",
+    "question": "What primary role does an operating system serve?",
+    "options": {
+      "A": "Acts as an interface between user and hardware",
+      "B": "Manages computer's memory and processes",
+      "C": "Provides antivirus protection",
+      "D": "Designs user application software"
+    },
+    "correct": "A",
+    "difficulty": "beginner"
+  },
+  {
+    "topic": "Functions_of_OS",
+    "question": "Which of the following correctly lists the primary functions of an operating system?",
+    "options": {
+      "A": "Process management, Memory management, File handling, Device control",
+      "B": "Process management, User interface design, File handling, Device control",
+      "C": "Memory management, Network security, File handling, Process management",
+      "D": "Device control, Application development, Memory management, File handling"
+    },
+    "correct": "A",
+    "difficulty": "beginner"
+  },
+  {
+    "topic": "Types_of_OS",
+    "question": "Which type of operating system is specifically designed to process data immediately, ensuring timely responses for critical tasks?",
+    "options": {
+      "A": "Real-time operating system",
+      "B": "Distributed operating system",
+      "C": "Time-sharing operating system",
+      "D": "Embedded operating system"
+    },
+    "correct": "A",
+    "difficulty": "beginner"
+  },
+  {
+    "topic": "User_Interface",
+    "question": "Which of the following is a characteristic of a Command Line Interface (CLI) compared to a Graphical User Interface (GUI)?",
+    "options": {
+      "A": "Requires users to type text commands",
+      "B": "Uses graphical icons for navigation",
+      "C": "Relies on windows and menus for interaction",
+      "D": "Primarily operated via a mouse or touch input"
+    },
+    "correct": "A",
+    "difficulty": "beginner"
+  },
+  {
+    "topic": "System_Calls",
+    "question": "Which of the following operations typically requires a system call?",
+    "options": {
+      "A": "Reading data from a file",
+      "B": "Adding two integer variables",
+      "C": "Allocating memory using malloc()",
+      "D": "Updating a local linked list"
+    },
+    "correct": "A",
+    "difficulty": "beginner"
+  },
+  {
+    "topic": "Kernel_vs_User_Mode",
+    "question": "What is the primary purpose of user mode in an operating system?",
+    "options": {
+      "A": "To prevent applications from directly accessing hardware and compromising system stability",
+      "B": "To enhance the performance of applications by reducing overhead",
+      "C": "To provide a user-friendly interface for interacting with the system",
+      "D": "To allow applications to manage hardware resources efficiently"
+    },
+    "correct": "A",
+    "difficulty": "beginner"
+  },
+  {
+    "topic": "Processes",
+    "question": "Which of the following is NOT one of the main memory segments of a process as described in the basic model?",
+    "options": {
+      "A": "Heap",
+      "B": "Code",
+      "C": "Data",
+      "D": "Stack"
+    },
+    "correct": "A",
+    "difficulty": "beginner"
+  },
+  {
+    "topic": "Threads",
+    "question": "Why is creating a thread typically faster than creating a new process?",
+    "options": {
+      "A": "Threads share the same memory and resources as the parent process",
+      "B": "Threads require fewer permissions from the operating system",
+      "C": "Threads avoid the need for context switching during execution",
+      "D": "Threads have priority access to CPU scheduling"
+    },
+    "correct": "A",
+    "difficulty": "beginner"
+  },
+  {
+    "topic": "Process_Scheduling",
+    "question": "What is the primary purpose of a CPU scheduling algorithm in an operating system?",
+    "options": {
+      "A": "To maximize CPU utilization and ensure fair process execution",
+      "B": "To allocate physical memory efficiently among processes",
+      "C": "To manage I/O device operations for running processes",
+      "D": "To create and terminate processes based on system load"
+    },
+    "correct": "A",
+    "difficulty": "beginner"
+  },
+  {
+    "topic": "Synchronization_Basics",
+    "question": "What is the primary purpose of synchronization in operating systems?",
+    "options": {
+      "A": "To ensure multiple threads access shared data safely",
+      "B": "To increase the execution speed of threads",
+      "C": "To prevent deadlock between processes",
+      "D": "To allocate resources efficiently among all processes"
+    },
+    "correct": "A",
+    "difficulty": "beginner"
+  }
+]
