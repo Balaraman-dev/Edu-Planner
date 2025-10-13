@@ -3,6 +3,7 @@ from agents.evaluator import EvaluatorAgent
 from agents.optimizer import OptimizerAgent
 from agents.analyst import AnalystAgent
 from core.ciddp import compute_ciddp_score
+from pathlib import Path
 import json
 
 def main():
@@ -14,8 +15,9 @@ def main():
     level_choice = input("Enter 1, 2, or 3: ").strip()
     level = level_map.get(level_choice, "easy")
 
-    # Step 2: Load questions
-    questions_file = f"../data/os_questions_{level}.json"
+    # Step 2: Load questions (resolve path relative to project root)
+    repo_root = Path(__file__).resolve().parents[1]
+    questions_file = repo_root / 'data' / f"os_questions_{level}.json"
     with open(questions_file, "r", encoding="utf-8") as f:
         questions = json.load(f)
 
@@ -73,30 +75,56 @@ def main():
     best_score = 0
     score_queue = []
     best_plan_snapshot = initial_plan
+    collected_pitfalls = []
+    seen_pitfalls = set()
 
     for iteration in range(3):
         print(f"\n--- Evaluator Agent (Iteration {iteration+1}) ---")
+        avg_score = 0.0
         try:
             scores, feedback = evaluator.evaluate(best_plan, skill_tree, sample_questions=user_answers)
         except ConnectionError as e:
             print(f"[Iter {iteration+1}] Ollama connection error: {e}")
             print("Skipping evaluation for this iteration.")
+            # record a zero score for this iteration
+            score_queue.append({"score": 0.0, "scores": {}, "plan": best_plan})
             continue
 
-        avg_score = compute_ciddp_score(scores)
-        score_queue.append({"score": avg_score, "scores": scores, "plan": best_plan})
-        print(f"Evaluator CIDPP Score: {avg_score:.2f}")
-        print(f"Evaluator Details: {scores}")
+        # If evaluator returned no structured scores, estimate from quiz performance
+        if not scores:
+            print("Warning: Evaluator returned no scores for this iteration. Estimating scores from quiz answers.")
+            total_q = len(user_answers) if user_answers else 10
+            correct = sum(ua['user_answer'] == ua['correct'] for ua in user_answers)
+            pct = correct / total_q if total_q else 0.0
+            # Map percentage to 1..5 scale
+            est_val = max(1, min(5, int(round(pct * 4)) + 1))
+            scores = {
+                'Clarity': est_val,
+                'Integrity': est_val,
+                'Depth': est_val,
+                'Practicality': est_val,
+                'Pertinence': est_val
+            }
+            avg_score = compute_ciddp_score(scores)
+            score_queue.append({"score": avg_score, "scores": scores, "plan": best_plan})
+            print(f"[Estimator] Estimated CIDDP Score: {avg_score:.2f} based on {correct}/{total_q} correct answers", flush=True)
+            print(f"[Estimator] Estimated Details: {scores}", flush=True)
+        else:
+            # evaluator provided structured scores: compute and show average
+            avg_score = compute_ciddp_score(scores)
+            score_queue.append({"score": avg_score, "scores": scores, "plan": best_plan})
+            print(f" Details: {scores}", flush=True)
+            print(f" CIDDP Score: {avg_score:.2f}", flush=True)
 
-        # Find lagging area (lowest score)
+        # Find lagging area (lowest score) — do not print the numeric score here
         lag_area = min(scores, key=scores.get) if scores else None
-        if lag_area:
-            print(f"Lagging Area: {lag_area} (Score: {scores[lag_area]})")
 
         print("\n--- Optimizer Agent ---")
+        # Use max (best) score to decide whether to optimize
         if avg_score > best_score:
             best_score = avg_score
             best_plan_snapshot = best_plan
+            # Keep optimizer behavior as before
             best_plan = optimizer.optimize(best_plan, feedback, skill_tree)
             print("Lesson plan optimized based on feedback and lagging area.")
 
@@ -104,27 +132,36 @@ def main():
         error_notes = analyst.analyze_errors(best_plan, skill_tree)
         print("Common Pitfalls Suggested:")
         print(error_notes)
-        best_plan += f"\n\nCommon Pitfalls:\n{error_notes}"
+        # Collect unique pitfalls and avoid appending duplicates to the plan repeatedly
+        if error_notes and error_notes not in seen_pitfalls:
+            collected_pitfalls.append(error_notes)
+            seen_pitfalls.add(error_notes)
 
     # Show max CIDPP score and corresponding lesson plan
     max_score_entry = max(score_queue, key=lambda x: x["score"], default=None)
     if max_score_entry:
         print(f"\n Max CIDPP Score: {max_score_entry['score']:.2f}")
-        print("\n==============================")
-        print("🌟 Your Personalized OS Lesson Plan 🌟")
-        print("==============================\n")
+        print("\n======================================")
+        print(" Your Personalized OS Lesson Plan ")
+        print("========================================\n")
         # Split and format the lesson plan for clarity
         plan_lines = [line.strip() for line in max_score_entry["plan"].split('\n') if line.strip()]
         for line in plan_lines:
+            # Skip previously appended common pitfalls in the plan body
             if line.startswith("Common Pitfalls:"):
-                print("\n🔎 " + line)
-            elif line[0].isdigit() and line[1] == '.':
+                continue
+            if line and line[0].isdigit() and line[1] == '.':
                 print(f"  {line}")
             else:
                 print(line)
-        print("\n==============================")
+        # Finally print collected pitfalls once
+        if collected_pitfalls:
+            print("\n\n Common Pitfalls and Misconceptions to Address:\n")
+            for notes in collected_pitfalls:
+                print(notes)
+        print("\n=====================================")
         print("Ready to start your OS study journey! 🚀")
-        print("==============================\n")
+        print("=======================================\n")
     else:
         print("No valid scores computed.")
 
