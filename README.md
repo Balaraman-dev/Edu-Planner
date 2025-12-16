@@ -8,10 +8,15 @@ This project was built as a major academic project, focused on solving the major
 
 Traditional lesson planning is often:
 1️⃣ Time-Consuming — Teachers spend hours creating structured plans.
+
 2️⃣ Not Personalized — Plans rarely adapt to student progress/levels.
+
 3️⃣ No Iterative Optimization — Once created, they are not refined.
+
 4️⃣ Standardized & Rigid — No dynamic evaluation system.
+
 5️⃣ Manual & Dependent — High effort with limited automation.
+
 
 EduPlanner solves these with an automated multi-agent pipeline.
 
@@ -225,5 +230,6 @@ Edu-Planner/
 ![path](https://github.com/user-attachments/assets/73de2b6c-71b2-48da-bb0b-ed27681de8f4)
 
 ![Uploading lessonplan.jpg…]()
+
 
 
