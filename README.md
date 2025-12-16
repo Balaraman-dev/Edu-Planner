@@ -7,6 +7,7 @@ This project was built as a major academic project, focused on solving the major
 🚨 Problem Space — Why EduPlanner?
 
 Traditional lesson planning is often:
+
 1️⃣ Time-Consuming — Teachers spend hours creating structured plans.
 
 2️⃣ Not Personalized — Plans rarely adapt to student progress/levels.
@@ -230,6 +231,7 @@ Edu-Planner/
 ![path](https://github.com/user-attachments/assets/73de2b6c-71b2-48da-bb0b-ed27681de8f4)
 
 ![Uploading lessonplan.jpg…]()
+
 
 
 
