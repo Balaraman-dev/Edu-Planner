@@ -224,13 +224,17 @@ Edu-Planner/
 │   └── App.jsx
 │
 └── README.md
+
+Reference Images
+
 ![login](https://github.com/user-attachments/assets/ea22cbfa-8668-46e8-afb4-ae21f2ba2f7d)![lp]
 
-(https://github.com/user-attachments/assets/9faa9316-f813-45dd-9663-a8fea8733dec)
+![lp](https://github.com/user-attachments/assets/2363fe53-b336-408e-a9a3-c9dba74ac926)
 
 ![path](https://github.com/user-attachments/assets/73de2b6c-71b2-48da-bb0b-ed27681de8f4)
 
-![Uploading lessonplan.jpg…]()
+![lessonplan](https://github.com/user-attachments/assets/170a2760-408f-44e0-b1d0-29eb580f4876)
+
 
 
 
